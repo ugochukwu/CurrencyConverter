@@ -1,6 +1,9 @@
 import React from 'react';
 import {
+  Alert,
+  Linking,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,44 +11,42 @@ import {
 } from 'react-native';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {RowItem, Separator} from '../components/row_item';
 
-const styles = StyleSheet.create({
-  separator: {
-    backgroundColor: colors.border,
-    height: StyleSheet.hairlineWidth,
-    marginLeft: 20,
-  },
-  row: {
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  title: {
-    color: colors.text,
-    fontSize: 16,
-  },
-});
+const openLink = (url: string) => {
+  return Linking.openURL(url).catch(() => {
+    Alert.alert('Sorry, something went wrong", "Please try again later.');
+  });
+};
 
 const Option = () => {
   return (
-    <SafeAreaView>
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.title}>Themes</Text>
-        <Icon name="chevron-right" size={30} color={colors.blue} />
-      </TouchableOpacity>
-      <View style={styles.separator} />
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.title}>React Native Basics</Text>
-        <Icon name="share" size={30} color={colors.blue} />
-      </TouchableOpacity>
-
-      <View style={styles.separator} />
-      <TouchableOpacity style={styles.row}>
-        <Text style={styles.title}>React Native by Example</Text>
-        <Icon name="share" size={30} color={colors.blue} />
-      </TouchableOpacity>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView>
+        <RowItem
+          onPress={() => Alert.alert('Todo!')}
+          text="Themes"
+          rightIcon={
+            <Icon name="chevron-right" size={30} color={colors.blue} />
+          }
+        />
+        <Separator />
+        <RowItem
+          onPress={() =>
+            openLink(
+              'https://learn.reactnativeschool.com/p/react-native-basics-build-a-currency-converter',
+            )
+          }
+          text="React Native Basics"
+          rightIcon={<Icon name="share" size={30} color={colors.blue} />}
+        />
+        <Separator />
+        <RowItem
+          onPress={() => openLink('https://reactnativebyexample.com')}
+          text="React Native by Example"
+          rightIcon={<Icon name="share" size={30} color={colors.blue} />}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
