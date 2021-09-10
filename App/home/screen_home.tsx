@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import React from 'react';
 import {
   Alert,
@@ -5,6 +6,7 @@ import {
   Image,
   StatusBar,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import colors from '../colors';
@@ -31,9 +33,26 @@ const styles = StyleSheet.create({
     height: '45%',
     width: '45%',
   },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 32,
+    color: colors.white,
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  fineprint: {
+    color: colors.white,
+    textAlign: 'center',
+    fontSize: 14,
+  },
 });
 
 export const Home = () => {
+  const baseCurrency = 'USD';
+  const quoteCurrency = 'GBP';
+  const conversionRate = '0.84325';
+  const today = format(new Date(), 'MMMM do, yyyy');
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
@@ -49,6 +68,8 @@ export const Home = () => {
           resizeMode="contain"
         />
       </View>
+
+      <Text style={styles.header}>Currency Converter</Text>
 
       <ConversionInput
         text="USD"
@@ -66,6 +87,10 @@ export const Home = () => {
         keyboardType="numeric"
         editable={false}
       />
+      <Text
+        style={
+          styles.fineprint
+        }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
     </View>
   );
 };
