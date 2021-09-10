@@ -1,6 +1,14 @@
 import React from 'react';
-import {Dimensions, Image, StatusBar, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Image,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import colors from '../colors';
+import {ConversionInput} from '../components/ConversionInput';
 
 const windowSize = Dimensions.get('screen');
 
@@ -8,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.blue,
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   logoContainer: {
     justifyContent: 'center',
@@ -20,7 +28,7 @@ const styles = StyleSheet.create({
     width: '25%',
   },
   logoBackground: {
-    height:'45%',
+    height: '45%',
     width: '45%',
   },
 });
@@ -41,6 +49,20 @@ export const Home = () => {
           resizeMode="contain"
         />
       </View>
+
+      <ConversionInput
+        text="USD"
+        value="123"
+        onButtonPress={() => Alert.alert('Todo!')}
+        onChangeText={(text: string) => console.log(text)}
+      />
+
+      <ConversionInput
+        text="GBP"
+        value="123"
+        onButtonPress={() => Alert.alert('Todo!')}
+        onChangeText={(text: string) => console.log(text)}
+      />
     </View>
   );
 };
