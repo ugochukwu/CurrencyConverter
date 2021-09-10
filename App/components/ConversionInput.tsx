@@ -69,7 +69,7 @@ export const ConversionInput = ({
 
   return (
     <View style={containerSyle}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onButtonPress}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
       <TextInput {...textInputProps} style={styles.input} />
