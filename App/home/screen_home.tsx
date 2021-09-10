@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import colors from '../colors';
+import {Button} from '../components/Button';
 import {ConversionInput} from '../components/ConversionInput';
 
 const windowSize = Dimensions.get('screen');
@@ -91,6 +92,8 @@ export const Home = () => {
         style={
           styles.fineprint
         }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
+
+      <Button text="Reverse Currencies" onPress={() => Alert.alert('Todo!')} />
     </View>
   );
 };
