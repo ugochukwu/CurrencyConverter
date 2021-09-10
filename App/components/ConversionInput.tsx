@@ -6,10 +6,20 @@ import {
   TextInput,
   TextInputProps,
   StyleSheet,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 import colors from '../colors';
 
-const styles = StyleSheet.create({
+interface style {
+  container: ViewStyle;
+  buttonText: TextStyle;
+  input: ViewStyle;
+  button: ViewStyle;
+  containerDisabled: ViewStyle;
+}
+
+const styles = StyleSheet.create<style>({
   container: {
     flexDirection: 'row',
     backgroundColor: colors.white,
@@ -21,6 +31,9 @@ const styles = StyleSheet.create({
     borderEndColor: colors.border,
     borderEndWidth: 1,
     justifyContent: 'center',
+    backgroundColor: colors.white,
+    borderTopStartRadius: 5,
+    borderBottomStartRadius: 5,
     padding: 16,
   },
   buttonText: {
@@ -34,6 +47,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textLight,
   },
+  containerDisabled: {
+    backgroundColor: colors.offWhite,
+  },
 });
 
 interface ConverstionInputProps extends TextInputProps {
@@ -45,8 +61,14 @@ export const ConversionInput = ({
   onButtonPress,
   ...textInputProps
 }: ConverstionInputProps): JSX.Element => {
+  let containerSyle = [styles.container];
+
+  if (textInputProps.editable === false) {
+    containerSyle.push(styles.containerDisabled);
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={containerSyle}>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
