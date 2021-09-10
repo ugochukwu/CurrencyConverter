@@ -55,6 +55,7 @@ export const Home = () => {
         value="123"
         onButtonPress={() => Alert.alert('Todo!')}
         onChangeText={(text: string) => console.log(text)}
+        keyboardType="numeric"
       />
 
       <ConversionInput
@@ -62,6 +63,7 @@ export const Home = () => {
         value="123"
         onButtonPress={() => Alert.alert('Todo!')}
         onChangeText={(text: string) => console.log(text)}
+        keyboardType="numeric"
       />
     </View>
   );
