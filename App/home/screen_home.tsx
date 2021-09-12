@@ -5,6 +5,8 @@ import {
   Dimensions,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -14,13 +16,29 @@ import {
 import colors from '../colors';
 import {Button} from '../components/Button';
 import {ConversionInput} from '../components/ConversionInput';
+import {KeyboardSpacer} from '../components/KeyboardSpacer';
 
 const windowSize = Dimensions.get('window');
+
+let logoSize: {height: any; width: any};
+if (Platform.OS === 'android' || Platform.OS === 'ios') {
+  logoSize = {height: windowSize.width * 0.25, width: windowSize.width * 0.25};
+} else {
+  logoSize = {height: '25%', width: '25%'};
+}
+
+let logoBackgroundSize: {height: any; width: any};
+if (Platform.OS === 'android' || Platform.OS === 'ios') {
+  logoBackgroundSize = {height:  windowSize.width * 0.45, width: windowSize.width / 0.45};
+} else {
+  logoBackgroundSize = {height: '45%', width: '45%'};
+}
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.blue,
     flex: 1,
+    justifyContent: 'center',
   },
   logoContainer: {
     justifyContent: 'center',
@@ -29,12 +47,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: 'absolute',
-    height: windowSize.width * 0.25,
-    width: windowSize.width * 0.25,
+    height: logoSize.height,
+    width: logoSize.width,
   },
   logoBackground: {
-    height: windowSize.width * 0.45,
-    width: windowSize.width / 0.45,
+    height:logoBackgroundSize.height,
+    width:logoBackgroundSize.width,
   },
   header: {
     fontWeight: 'bold',
@@ -48,9 +66,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
   },
-  content: {
-    paddingTop: windowSize.height * 0.2,
-  },
 });
 
 export const Home = () => {
@@ -59,76 +74,49 @@ export const Home = () => {
   const conversionRate = '0.84325';
   const today = format(new Date(), 'MMMM do, yyyy');
 
-  const [scrollEnabled, setScrollEnabled] = useState(false);
-
-  useEffect(() => {
-    const onKeyboardShownListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setScrollEnabled(true);
-      },
-    );
-
-    const onKeyboardHiddenListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setScrollEnabled(false);
-      },
-    );
-    return () => {
-      onKeyboardShownListener.remove();
-      onKeyboardHiddenListener.remove();
-    };
-  }, []);
-
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'android')?'padding':'height'}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
-      <ScrollView scrollEnabled={scrollEnabled}>
-        <View style={styles.content}>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../assets/images/background.png')}
-              style={styles.logoBackground}
-              resizeMode="contain"
-            />
-            <Image
-              source={require('../assets/images/logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../assets/images/background.png')}
+          style={styles.logoBackground}
+          resizeMode="contain"
+        />
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
 
-          <Text style={styles.header}>Currency Converter</Text>
+      <Text style={styles.header}>Currency Converter</Text>
 
-          <ConversionInput
-            text="USD"
-            value="123"
-            onButtonPress={() => Alert.alert('Todo!')}
-            onChangeText={(text: string) => console.log(text)}
-            keyboardType="numeric"
-          />
+      <ConversionInput
+        text="USD"
+        value="123"
+        onButtonPress={() => Alert.alert('Todo!')}
+        onChangeText={(text: string) => console.log(text)}
+        keyboardType="numeric"
+      />
 
-          <ConversionInput
-            text="GBP"
-            value="123"
-            onButtonPress={() => Alert.alert('Todo!')}
-            onChangeText={(text: string) => console.log(text)}
-            keyboardType="numeric"
-            editable={false}
-          />
-          <Text
-            style={
-              styles.fineprint
-            }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
+      <ConversionInput
+        text="GBP"
+        value="123"
+        onButtonPress={() => Alert.alert('Todo!')}
+        onChangeText={(text: string) => console.log(text)}
+        keyboardType="numeric"
+        editable={false}
+      />
+      <Text
+        style={
+          styles.fineprint
+        }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
 
-          <Button
-            text="Reverse Currencies"
-            onPress={() => Alert.alert('Todo!')}
-          />
-          <View style={{height: windowSize.height}} />
-        </View>
-      </ScrollView>
-    </View>
+      <Button text="Reverse Currencies" onPress={() => Alert.alert('Todo!')} />
+      {/* <KeyboardSpacer */}
+      {/* onToggle={isKeyboardVisible => setScrollEnabled(isKeyboardVisible)} */}
+      {/* /> */}
+    </KeyboardAvoidingView>
   );
 };
