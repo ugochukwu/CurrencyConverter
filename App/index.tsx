@@ -9,11 +9,10 @@
  */
 
 import React from 'react';
-import {Home} from './home/screen_home';
-import Option from './options/screen_options';
+import Navigation from './Navigation';
 
 const App = () => {
-  return <Home />;
+  return <Navigation />;
 };
 
 export default App;

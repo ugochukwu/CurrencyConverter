@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@klarna/react-native-vector-drawable": "^0.3.0",
+    "@react-navigation/native": "^6.0.2",
+    "@react-navigation/native-stack": "^6.1.0",
     "date-fns": "^2.23.0",
     "eslint-plugin-import": "^2.24.2",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.7.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-vector-image": "^0.3.2"
   },

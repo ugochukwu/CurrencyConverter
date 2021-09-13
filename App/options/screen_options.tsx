@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  Linking,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, Linking, SafeAreaView, ScrollView} from 'react-native';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RowItem, Separator} from '../components/row_item';
@@ -19,7 +10,7 @@ const openLink = (url: string) => {
   });
 };
 
-const Option = () => {
+const Options = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
@@ -51,4 +42,4 @@ const Option = () => {
   );
 };
 
-export default Option;
+export default Options;
