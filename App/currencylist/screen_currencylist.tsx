@@ -18,7 +18,7 @@ export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
           <RowItem text={item} onPress={() => navigation.navigate('Home')} />
         )}
         ItemSeparatorComponent={() => <Separator />}
-        ListFooterComponent={() => <View style={{height: insets.bottom}} />}
+        ListFooterComponent={() => <View style={{paddingBottom: insets.bottom}} />}
       />
     </View>
   );

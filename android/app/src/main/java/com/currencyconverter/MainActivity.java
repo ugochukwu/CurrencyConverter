@@ -2,6 +2,7 @@ package com.currencyconverter;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+import androidx.core.view.WindowCompat;
 
 public class MainActivity extends ReactActivity {
 
@@ -17,5 +18,6 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState){
     super.onCreate(null);
+    WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
   }
 }

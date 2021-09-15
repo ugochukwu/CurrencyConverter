@@ -29,10 +29,7 @@ const Navigation = () => {
         <Stack.Screen
           name="CurrencyList"
           component={CurrencyList}
-          options={({route}) => {
-            console.log('Current route info -> ' + route.params?.title);
-            return {title: route.params?.title};
-          }}
+          options={({route}) => ({title: route.params?.title})}
         />
       </Stack.Navigator>
     </NavigationContainer>
