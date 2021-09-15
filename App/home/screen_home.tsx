@@ -114,7 +114,7 @@ export const Home = ({navigation}: Props) => {
         <ConversionInput
           text="USD"
           value="123"
-          onButtonPress={() => Alert.alert('Todo!')}
+          onButtonPress={() => navigation.push('CurrencyList')}
           onChangeText={(text: string) => console.log(text)}
           keyboardType="numeric"
         />
@@ -122,7 +122,7 @@ export const Home = ({navigation}: Props) => {
         <ConversionInput
           text="GBP"
           value="123"
-          onButtonPress={() => Alert.alert('Todo!')}
+          onButtonPress={() => navigation.push('CurrencyList')}
           onChangeText={(text: string) => console.log(text)}
           keyboardType="numeric"
           editable={false}
