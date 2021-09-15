@@ -86,10 +86,10 @@ export const Home = ({navigation}: Props) => {
   const today = format(new Date(), 'MMMM do, yyyy');
 
   return (
-    <KeyboardAvoidingView
+    <View
       style={styles.container}
-      behavior={Platform.OS === 'android' ? 'position' : 'height'}>
-      <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
+     >
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
       <SafeAreaView style={styles.navheader}>
         <TouchableOpacity onPress={() => navigation.navigate('Options')}>
           <Icon name="settings" size={30} style={{color: colors.white}} />
@@ -144,6 +144,6 @@ export const Home = ({navigation}: Props) => {
           onPress={() => Alert.alert('Todo!')}
         />
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };

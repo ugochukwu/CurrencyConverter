@@ -19,7 +19,7 @@ const openLink = (url: string) => {
 const Options = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
+      <StatusBar barStyle="dark-content" translucent={true} />
       <ScrollView>
         <RowItem
           onPress={() => Alert.alert('Todo!')}

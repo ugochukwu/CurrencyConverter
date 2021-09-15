@@ -10,7 +10,7 @@ export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
   const insets = useSafeAreaInsets();
   return (
     <View>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
+      <StatusBar barStyle="dark-content" />
       <FlatList
         data={currencies}
         keyExtractor={item => item}
@@ -18,7 +18,9 @@ export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
           <RowItem text={item} onPress={() => navigation.navigate('Home')} />
         )}
         ItemSeparatorComponent={() => <Separator />}
-        ListFooterComponent={() => <View style={{paddingBottom: insets.bottom}} />}
+        ListFooterComponent={() => (
+          <View style={{paddingBottom: insets.bottom}} />
+        )}
       />
     </View>
   );
