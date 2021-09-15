@@ -21,22 +21,22 @@ import {Button} from '../components/Button';
 import {ConversionInput} from '../components/ConversionInput';
 import {Props} from '../Navigation';
 
-//make a hook with this logic 
+//make a hook with this logic
 const windowSize = Dimensions.get('screen');
 let logoSize: {height: any; width: any};
-if (Platform.OS === 'android' || Platform.OS === 'ios') {
-  logoSize = {height: windowSize.width * 0.25, width: windowSize.width * 0.25};
+if (windowSize.width >= 600) {
+  logoSize = {height: '15%', width: '15%'};
 } else {
-  logoSize = {height: '25%', width: '25%'};
+  logoSize = {height: windowSize.width * 0.25, width: windowSize.width * 0.25};
 }
 let logoBackgroundSize: {height: any; width: any};
-if (Platform.OS === 'android' || Platform.OS === 'ios') {
+if (windowSize.width >= 600) {
+  logoBackgroundSize = {height: '45%', width: '45%'};
+} else {
   logoBackgroundSize = {
     height: windowSize.width * 0.45,
     width: windowSize.width / 0.45,
   };
-} else {
-  logoBackgroundSize = {height: '45%', width: '45%'};
 }
 
 const styles = StyleSheet.create({
