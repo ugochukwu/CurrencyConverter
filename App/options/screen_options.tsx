@@ -1,5 +1,11 @@
 import React from 'react';
-import {Alert, Linking, SafeAreaView, ScrollView} from 'react-native';
+import {
+  Alert,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RowItem, Separator} from '../components/row_item';

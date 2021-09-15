@@ -1,35 +1,40 @@
+import {NavigationProp} from '@react-navigation/core';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {format} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
   Image,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../colors';
 import {Button} from '../components/Button';
 import {ConversionInput} from '../components/ConversionInput';
-import {KeyboardSpacer} from '../components/KeyboardSpacer';
+import {Props} from '../Navigation';
 
-const windowSize = Dimensions.get('window');
-
+//make a hook with this logic 
+const windowSize = Dimensions.get('screen');
 let logoSize: {height: any; width: any};
 if (Platform.OS === 'android' || Platform.OS === 'ios') {
   logoSize = {height: windowSize.width * 0.25, width: windowSize.width * 0.25};
 } else {
   logoSize = {height: '25%', width: '25%'};
 }
-
 let logoBackgroundSize: {height: any; width: any};
 if (Platform.OS === 'android' || Platform.OS === 'ios') {
-  logoBackgroundSize = {height:  windowSize.width * 0.45, width: windowSize.width / 0.45};
+  logoBackgroundSize = {
+    height: windowSize.width * 0.45,
+    width: windowSize.width / 0.45,
+  };
 } else {
   logoBackgroundSize = {height: '45%', width: '45%'};
 }
@@ -38,7 +43,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.blue,
     flex: 1,
-    justifyContent: 'center',
   },
   logoContainer: {
     justifyContent: 'center',
@@ -51,8 +55,8 @@ const styles = StyleSheet.create({
     width: logoSize.width,
   },
   logoBackground: {
-    height:logoBackgroundSize.height,
-    width:logoBackgroundSize.width,
+    height: logoBackgroundSize.height,
+    width: logoBackgroundSize.width,
   },
   header: {
     fontWeight: 'bold',
@@ -66,57 +70,73 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
   },
+  content: {
+    marginTop: windowSize.height * 0.1,
+  },
+  navheader: {
+    alignItems: 'flex-end',
+    marginEnd: 16,
+  },
 });
 
-export const Home = () => {
+export const Home = ({navigation}: Props) => {
   const baseCurrency = 'USD';
   const quoteCurrency = 'GBP';
   const conversionRate = '0.84325';
   const today = format(new Date(), 'MMMM do, yyyy');
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'android')?'padding':'height'}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/images/background.png')}
-          style={styles.logoBackground}
-          resizeMode="contain"
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'android' ? 'position' : 'height'}>
+      <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
+      <SafeAreaView style={styles.navheader}>
+        <TouchableOpacity onPress={() => navigation.push('Options')}>
+          <Icon name="settings" size={30} style={{color: colors.white}} />
+        </TouchableOpacity>
+      </SafeAreaView>
+      <View style={styles.content}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/images/background.png')}
+            style={styles.logoBackground}
+            resizeMode="contain"
+          />
+          <Image
+            source={require('../assets/images/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
+
+        <Text style={styles.header}>Currency Converter</Text>
+
+        <ConversionInput
+          text="USD"
+          value="123"
+          onButtonPress={() => Alert.alert('Todo!')}
+          onChangeText={(text: string) => console.log(text)}
+          keyboardType="numeric"
         />
-        <Image
-          source={require('../assets/images/logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
+
+        <ConversionInput
+          text="GBP"
+          value="123"
+          onButtonPress={() => Alert.alert('Todo!')}
+          onChangeText={(text: string) => console.log(text)}
+          keyboardType="numeric"
+          editable={false}
+        />
+        <Text
+          style={
+            styles.fineprint
+          }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
+
+        <Button
+          text="Reverse Currencies"
+          onPress={() => Alert.alert('Todo!')}
         />
       </View>
-
-      <Text style={styles.header}>Currency Converter</Text>
-
-      <ConversionInput
-        text="USD"
-        value="123"
-        onButtonPress={() => Alert.alert('Todo!')}
-        onChangeText={(text: string) => console.log(text)}
-        keyboardType="numeric"
-      />
-
-      <ConversionInput
-        text="GBP"
-        value="123"
-        onButtonPress={() => Alert.alert('Todo!')}
-        onChangeText={(text: string) => console.log(text)}
-        keyboardType="numeric"
-        editable={false}
-      />
-      <Text
-        style={
-          styles.fineprint
-        }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
-
-      <Button text="Reverse Currencies" onPress={() => Alert.alert('Todo!')} />
-      {/* <KeyboardSpacer */}
-      {/* onToggle={isKeyboardVisible => setScrollEnabled(isKeyboardVisible)} */}
-      {/* /> */}
     </KeyboardAvoidingView>
   );
 };
