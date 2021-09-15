@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 interface RowItemProps {
-  rightIcon: JSX.Element;
+  rightIcon?: JSX.Element;
   text: String;
   onPress?: () => void;
 }

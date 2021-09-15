@@ -91,7 +91,7 @@ export const Home = ({navigation}: Props) => {
       behavior={Platform.OS === 'android' ? 'position' : 'height'}>
       <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
       <SafeAreaView style={styles.navheader}>
-        <TouchableOpacity onPress={() => navigation.push('Options')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Options')}>
           <Icon name="settings" size={30} style={{color: colors.white}} />
         </TouchableOpacity>
       </SafeAreaView>
@@ -114,7 +114,12 @@ export const Home = ({navigation}: Props) => {
         <ConversionInput
           text="USD"
           value="123"
-          onButtonPress={() => navigation.push('CurrencyList')}
+          onButtonPress={() =>
+            navigation.navigate({
+              name: 'CurrencyList',
+              params: {title: 'Base Currency'},
+            })
+          }
           onChangeText={(text: string) => console.log(text)}
           keyboardType="numeric"
         />
@@ -122,7 +127,9 @@ export const Home = ({navigation}: Props) => {
         <ConversionInput
           text="GBP"
           value="123"
-          onButtonPress={() => navigation.push('CurrencyList')}
+          onButtonPress={() =>
+            navigation.push('CurrencyList', {title: 'Quote Currency'})
+          }
           onChangeText={(text: string) => console.log(text)}
           keyboardType="numeric"
           editable={false}
