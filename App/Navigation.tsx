@@ -4,7 +4,8 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import React from 'react';
-import {Modal} from 'react-native';
+import {Modal, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from './colors';
 import {CurrencyList} from './currencylist/screen_currencylist';
 import {Home} from './home/screen_home';
@@ -43,7 +44,22 @@ const ModalNavigator = () => (
     <ModalStack.Screen
       name="CurrencyList"
       component={CurrencyList}
-      options={({route}) => ({title: route.params?.title})}
+      options={({navigation, route}) => ({
+        title: route.params?.title,
+        headerBackVisible: false,
+        headerLeft: () => <View style={{width: 6}} />,
+        headerRight: () => (
+          <TouchableOpacity>
+            <Icon
+              name="close"
+              size={24}
+              color={colors.blue}
+              onPress={() => navigation.pop()}
+              style={{padding: 16, paddingEnd: 0}}
+            />
+          </TouchableOpacity>
+        ),
+      })}
     />
   </ModalStack.Navigator>
 );
