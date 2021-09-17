@@ -66,9 +66,11 @@ const ModalNavigator = () => (
 
 export type RootStackParams = {
   Main: undefined;
-  Home: undefined;
+  Home: {quoteCurrency?: string; baseCurrency?: string} | undefined;
   Options: undefined;
-  CurrencyList: {title: string; activeCurrency: string} | undefined;
+  CurrencyList:
+    | {title: string; activeCurrency: string; selectionMode: 'base' | 'quote'}
+    | undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParams, 'Home'>;

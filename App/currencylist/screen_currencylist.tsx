@@ -14,6 +14,16 @@ export const CurrencyList: React.FC<CurrencyListProps> = ({
   route,
 }: CurrencyListProps) => {
   const insets = useSafeAreaInsets();
+
+  function sendCurrency(item: string): {
+    baseCurrency: string | undefined;
+    quoteCurrency: string | undefined;
+  } {
+    return route.params?.selectionMode === 'base'
+      ? {baseCurrency: item, quoteCurrency: undefined}
+      : {quoteCurrency: item, baseCurrency: undefined};
+  }
+
   return (
     <View>
       <StatusBar barStyle="dark-content" />
@@ -25,7 +35,12 @@ export const CurrencyList: React.FC<CurrencyListProps> = ({
           return (
             <RowItem
               text={item}
-              onPress={() => navigation.navigate('Home')}
+              onPress={() =>
+                navigation.navigate({
+                  name: 'Home',
+                  params: sendCurrency(item),
+                })
+              }
               rightIcon={selectedItem ? CheckMark() : undefined}
             />
           );

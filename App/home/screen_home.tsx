@@ -79,11 +79,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home = ({navigation}: Props) => {
+export const Home = ({navigation, route}: Props) => {
   const [baseCurrency, setBaseCurrency] = useState('USD');
   const [quoteCurrency, setQuoteCurrency] = useState('GBP');
   const conversionRate = '0.84325';
   const today = format(new Date(), 'MMMM do, yyyy');
+  const params = route.params;
+
+  useEffect(() => {
+    if (params?.baseCurrency != undefined) {
+      setBaseCurrency(params?.baseCurrency);
+    }
+    if (params?.quoteCurrency != undefined) {
+      setQuoteCurrency(params?.quoteCurrency);
+    }
+  }, [params?.baseCurrency, params?.quoteCurrency]);
 
   return (
     <View style={styles.container}>
@@ -115,7 +125,11 @@ export const Home = ({navigation}: Props) => {
           onButtonPress={() =>
             navigation.navigate({
               name: 'CurrencyList',
-              params: {title: 'Base Currency', activeCurrency: baseCurrency},
+              params: {
+                title: 'Base Currency',
+                activeCurrency: baseCurrency,
+                selectionMode: 'base',
+              },
             })
           }
           onChangeText={(text: string) => console.log(text)}
@@ -129,6 +143,7 @@ export const Home = ({navigation}: Props) => {
             navigation.push('CurrencyList', {
               title: 'Quote Currency',
               activeCurrency: quoteCurrency,
+              selectionMode: 'quote',
             })
           }
           onChangeText={(text: string) => console.log(text)}
