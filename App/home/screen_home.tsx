@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
 });
 
 export const Home = ({navigation}: Props) => {
-  const baseCurrency = 'USD';
-  const quoteCurrency = 'GBP';
+  const [baseCurrency, setBaseCurrency] = useState('USD');
+  const [quoteCurrency, setQuoteCurrency] = useState('GBP');
   const conversionRate = '0.84325';
   const today = format(new Date(), 'MMMM do, yyyy');
 
@@ -140,11 +140,13 @@ export const Home = ({navigation}: Props) => {
             styles.fineprint
           }>{`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${today}`}</Text>
 
-        <Button
-          text="Reverse Currencies"
-          onPress={() => Alert.alert('Todo!')}
-        />
+        <Button text="Reverse Currencies" onPress={() => swapCurrencies()} />
       </View>
     </View>
   );
+
+  function swapCurrencies(): void {
+    setQuoteCurrency(baseCurrency);
+    setBaseCurrency(quoteCurrency);
+  }
 };
