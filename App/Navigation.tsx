@@ -64,13 +64,17 @@ const ModalNavigator = () => (
   </ModalStack.Navigator>
 );
 
-type RootStackParams = {
+export type RootStackParams = {
   Main: undefined;
   Home: undefined;
   Options: undefined;
-  CurrencyList: {title: string} | undefined;
+  CurrencyList: {title: string; activeCurrency: string} | undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParams, 'Home'>;
 
+export type CurrencyListProps = NativeStackScreenProps<
+  RootStackParams,
+  'CurrencyList'
+>;
 export default () => <Navigation />;

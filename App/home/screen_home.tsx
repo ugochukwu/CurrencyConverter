@@ -86,9 +86,7 @@ export const Home = ({navigation}: Props) => {
   const today = format(new Date(), 'MMMM do, yyyy');
 
   return (
-    <View
-      style={styles.container}
-     >
+    <View style={styles.container}>
       <StatusBar backgroundColor={'transparent'} translucent={true} />
       <SafeAreaView style={styles.navheader}>
         <TouchableOpacity onPress={() => navigation.navigate('Options')}>
@@ -112,12 +110,12 @@ export const Home = ({navigation}: Props) => {
         <Text style={styles.header}>Currency Converter</Text>
 
         <ConversionInput
-          text="USD"
+          text={baseCurrency}
           value="123"
           onButtonPress={() =>
             navigation.navigate({
               name: 'CurrencyList',
-              params: {title: 'Base Currency'},
+              params: {title: 'Base Currency', activeCurrency: baseCurrency},
             })
           }
           onChangeText={(text: string) => console.log(text)}
@@ -125,10 +123,13 @@ export const Home = ({navigation}: Props) => {
         />
 
         <ConversionInput
-          text="GBP"
+          text={quoteCurrency}
           value="123"
           onButtonPress={() =>
-            navigation.push('CurrencyList', {title: 'Quote Currency'})
+            navigation.push('CurrencyList', {
+              title: 'Quote Currency',
+              activeCurrency: quoteCurrency,
+            })
           }
           onChangeText={(text: string) => console.log(text)}
           keyboardType="numeric"

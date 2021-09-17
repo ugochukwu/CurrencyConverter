@@ -3,10 +3,16 @@ import {FlatList, StatusBar, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import colors from '../colors';
 import {RowItem, Separator} from '../components/row_item';
-import {Props} from '../Navigation';
+import {CurrencyListProps} from '../Navigation';
 import currencies from './currencies.json';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {NavigatorScreenParams} from '@react-navigation/core';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
+export const CurrencyList: React.FC<CurrencyListProps> = ({
+  navigation,
+  route,
+}: CurrencyListProps) => {
   const insets = useSafeAreaInsets();
   return (
     <View>
@@ -14,9 +20,16 @@ export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
       <FlatList
         data={currencies}
         keyExtractor={item => item}
-        renderItem={({item}) => (
-          <RowItem text={item} onPress={() => navigation.navigate('Home')} />
-        )}
+        renderItem={({item}) => {
+          const selectedItem = route.params?.activeCurrency === item;
+          return (
+            <RowItem
+              text={item}
+              onPress={() => navigation.navigate('Home')}
+              rightIcon={selectedItem ? CheckMark() : undefined}
+            />
+          );
+        }}
         ItemSeparatorComponent={() => <Separator />}
         ListFooterComponent={() => (
           <View style={{paddingBottom: insets.bottom}} />
@@ -25,3 +38,10 @@ export const CurrencyList: React.FC<Props> = ({navigation}: Props) => {
     </View>
   );
 };
+function CheckMark(): JSX.Element {
+  return (
+    <View style={{backgroundColor: colors.blue, borderRadius: 15}}>
+      <Icon name="check" size={20} color={colors.white} style={{padding: 4}} />
+    </View>
+  );
+}
