@@ -116,7 +116,13 @@ export const Home = ({navigation}: Props) => {
           onButtonPress={() =>
             navigation.navigate({
               name: 'CurrencyList',
-              params: {title: 'Base Currency', activeCurrency: baseCurrency},
+              params: {
+                title: 'Base Currency',
+                activeCurrency: baseCurrency,
+                onChangeCurrency: currency => {
+                  setBaseCurrency(currency);
+                },
+              },
             })
           }
           onChangeText={(text: string) => setValue(text)}
@@ -130,6 +136,9 @@ export const Home = ({navigation}: Props) => {
             navigation.push('CurrencyList', {
               title: 'Quote Currency',
               activeCurrency: quoteCurrency,
+              onChangeCurrency: currency => {
+                setQuoteCurrency(currency);
+              },
             })
           }
           onChangeText={(text: string) => console.log(text)}

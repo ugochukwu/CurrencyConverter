@@ -68,7 +68,13 @@ export type RootStackParams = {
   Main: undefined;
   Home: undefined;
   Options: undefined;
-  CurrencyList: {title: string; activeCurrency: string} | undefined;
+  CurrencyList:
+    | {
+        title: string;
+        activeCurrency: string;
+        onChangeCurrency: (currency: string) => void;
+      }
+    | undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParams, 'Home'>;

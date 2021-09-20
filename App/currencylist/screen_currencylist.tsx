@@ -21,11 +21,15 @@ export const CurrencyList: React.FC<CurrencyListProps> = ({
         data={currencies}
         keyExtractor={item => item}
         renderItem={({item}) => {
-          const selectedItem = route.params?.activeCurrency === item;
+          const params = route.params;
+          const selectedItem = params?.activeCurrency === item;
           return (
             <RowItem
               text={item}
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => {
+                params?.onChangeCurrency(item);
+                navigation.navigate('Home');
+              }}
               rightIcon={selectedItem ? CheckMark() : undefined}
             />
           );
