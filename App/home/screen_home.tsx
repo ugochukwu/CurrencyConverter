@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
 export const Home = ({navigation}: Props) => {
   const [baseCurrency, setBaseCurrency] = useState('USD');
   const [quoteCurrency, setQuoteCurrency] = useState('GBP');
-  const conversionRate = '0.84325';
+  const conversionRate = 0.84325;
   const today = format(new Date(), 'MMMM do, yyyy');
+  const [value, setValue] = useState('100');
 
   return (
     <View style={styles.container}>
@@ -111,20 +112,20 @@ export const Home = ({navigation}: Props) => {
 
         <ConversionInput
           text={baseCurrency}
-          value="123"
+          value={value}
           onButtonPress={() =>
             navigation.navigate({
               name: 'CurrencyList',
               params: {title: 'Base Currency', activeCurrency: baseCurrency},
             })
           }
-          onChangeText={(text: string) => console.log(text)}
+          onChangeText={(text: string) => setValue(text)}
           keyboardType="numeric"
         />
 
         <ConversionInput
           text={quoteCurrency}
-          value="123"
+          value={value && `${(parseFloat(value) * conversionRate).toFixed(2)}`}
           onButtonPress={() =>
             navigation.push('CurrencyList', {
               title: 'Quote Currency',
