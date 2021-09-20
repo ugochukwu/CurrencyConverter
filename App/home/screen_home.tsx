@@ -85,6 +85,7 @@ export const Home = ({navigation, route}: Props) => {
   const conversionRate = '0.84325';
   const today = format(new Date(), 'MMMM do, yyyy');
   const params = route.params;
+  const [input, setInput] = useState('123');
 
   useEffect(() => {
     if (params?.baseCurrency != undefined) {
@@ -121,7 +122,7 @@ export const Home = ({navigation, route}: Props) => {
 
         <ConversionInput
           text={baseCurrency}
-          value="123"
+          value={input}
           onButtonPress={() =>
             navigation.navigate({
               name: 'CurrencyList',
@@ -132,13 +133,13 @@ export const Home = ({navigation, route}: Props) => {
               },
             })
           }
-          onChangeText={(text: string) => console.log(text)}
+          onChangeText={(text: string) => setInput(text)}
           keyboardType="numeric"
         />
 
         <ConversionInput
           text={quoteCurrency}
-          value="123"
+          value={convertInput(input)}
           onButtonPress={() =>
             navigation.push('CurrencyList', {
               title: 'Quote Currency',
@@ -163,5 +164,9 @@ export const Home = ({navigation, route}: Props) => {
   function swapCurrencies(): void {
     setQuoteCurrency(baseCurrency);
     setBaseCurrency(quoteCurrency);
+  }
+
+  function convertInput(input: string): string {
+    return (parseFloat(input) * parseFloat(conversionRate)).toString();
   }
 };
