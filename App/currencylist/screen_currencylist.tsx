@@ -1,19 +1,21 @@
 import React from 'react';
 import {FlatList, StatusBar, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../colors';
 import {RowItem, Separator} from '../components/row_item';
 import {CurrencyListProps} from '../Navigation';
 import currencies from './currencies.json';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {NavigatorScreenParams} from '@react-navigation/core';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useActiveCurrencyContext} from './UseActiveCurrencyContext';
 
 export const CurrencyList: React.FC<CurrencyListProps> = ({
   navigation,
   route,
 }: CurrencyListProps) => {
   const insets = useSafeAreaInsets();
+  const [activeCurrency, setActiveCurrency] = useActiveCurrencyContext(
+    route.params?.isBaseCurrency,
+  );
   return (
     <View>
       <StatusBar barStyle="dark-content" />
@@ -21,13 +23,12 @@ export const CurrencyList: React.FC<CurrencyListProps> = ({
         data={currencies}
         keyExtractor={item => item}
         renderItem={({item}) => {
-          const params = route.params;
-          const selectedItem = params?.activeCurrency === item;
+          const selectedItem = activeCurrency === item;
           return (
             <RowItem
               text={item}
               onPress={() => {
-                params?.onChangeCurrency(item);
+                setActiveCurrency(item);
                 navigation.navigate('Home');
               }}
               rightIcon={selectedItem ? CheckMark() : undefined}
@@ -42,6 +43,7 @@ export const CurrencyList: React.FC<CurrencyListProps> = ({
     </View>
   );
 };
+
 function CheckMark(): JSX.Element {
   return (
     <View style={{backgroundColor: colors.blue, borderRadius: 15}}>

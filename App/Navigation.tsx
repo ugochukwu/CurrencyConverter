@@ -4,9 +4,10 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import React from 'react';
-import {Modal, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from './colors';
+import {ConversionContextProvider} from './CurrencyConverterContext';
 import {CurrencyList} from './currencylist/screen_currencylist';
 import {Home} from './home/screen_home';
 import Options from './options/screen_options';
@@ -17,7 +18,9 @@ const destinationScreenOptions = {headerStyle: {backgroundColor: colors.white}};
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <ModalNavigator />
+      <ConversionContextProvider>
+        <ModalNavigator />
+      </ConversionContextProvider>
     </NavigationContainer>
   );
 };
@@ -71,8 +74,7 @@ export type RootStackParams = {
   CurrencyList:
     | {
         title: string;
-        activeCurrency: string;
-        onChangeCurrency: (currency: string) => void;
+        isBaseCurrency: boolean;
       }
     | undefined;
 };

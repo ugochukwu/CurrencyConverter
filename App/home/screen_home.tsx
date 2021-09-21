@@ -1,13 +1,8 @@
-import {NavigationProp} from '@react-navigation/core';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {format} from 'date-fns';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
-  Alert,
   Dimensions,
   Image,
-  KeyboardAvoidingView,
-  Platform,
   StatusBar,
   StyleSheet,
   Text,
@@ -19,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../colors';
 import {Button} from '../components/Button';
 import {ConversionInput} from '../components/ConversionInput';
+import {ConversionContext} from '../CurrencyConverterContext';
 import {Props} from '../Navigation';
 
 //make a hook with this logic
@@ -80,11 +76,16 @@ const styles = StyleSheet.create({
 });
 
 export const Home = ({navigation}: Props) => {
-  const [baseCurrency, setBaseCurrency] = useState('USD');
-  const [quoteCurrency, setQuoteCurrency] = useState('GBP');
   const conversionRate = 0.84325;
   const today = format(new Date(), 'MMMM do, yyyy');
   const [value, setValue] = useState('100');
+  const {
+    setBaseCurrency,
+    baseCurrency,
+    quoteCurrency,
+    setQuoteCurrency,
+    swapCurrencies,
+  } = useContext(ConversionContext);
 
   return (
     <View style={styles.container}>
@@ -118,10 +119,7 @@ export const Home = ({navigation}: Props) => {
               name: 'CurrencyList',
               params: {
                 title: 'Base Currency',
-                activeCurrency: baseCurrency,
-                onChangeCurrency: currency => {
-                  setBaseCurrency(currency);
-                },
+                isBaseCurrency: true,
               },
             })
           }
@@ -135,10 +133,7 @@ export const Home = ({navigation}: Props) => {
           onButtonPress={() =>
             navigation.push('CurrencyList', {
               title: 'Quote Currency',
-              activeCurrency: quoteCurrency,
-              onChangeCurrency: currency => {
-                setQuoteCurrency(currency);
-              },
+              isBaseCurrency: false,
             })
           }
           onChangeText={(text: string) => console.log(text)}
@@ -154,9 +149,4 @@ export const Home = ({navigation}: Props) => {
       </View>
     </View>
   );
-
-  function swapCurrencies(): void {
-    setQuoteCurrency(baseCurrency);
-    setBaseCurrency(quoteCurrency);
-  }
 };

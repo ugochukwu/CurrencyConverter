@@ -1,21 +1,21 @@
 import React, {createContext, useState} from 'react';
 
-type CurrencyUpdateAction = (currency: string) => void;
+export type CurrencyUpdateAction = (currency: string) => void;
 
 type CurrencyContextType = {
   baseCurrency: string;
   quoteCurrency: string;
-  setBaseCurrency: CurrencyUpdateAction | null;
-  setQuoteCurrency: CurrencyUpdateAction | null;
-  swapCurrencies: (() => void) | null;
+  setBaseCurrency: CurrencyUpdateAction;
+  setQuoteCurrency: CurrencyUpdateAction;
+  swapCurrencies: () => void;
 };
 
-const ConversionContext = createContext<CurrencyContextType>({
+export const ConversionContext = createContext<CurrencyContextType>({
   baseCurrency: 'USD',
   quoteCurrency: 'GBP',
-  setBaseCurrency: null,
-  setQuoteCurrency: null,
-  swapCurrencies: null,
+  setBaseCurrency: () => {},
+  setQuoteCurrency: () => {},
+  swapCurrencies: () => {},
 });
 
 export const ConversionContextProvider: React.FC = ({children}) => {
