@@ -76,22 +76,18 @@ const styles = StyleSheet.create({
 });
 
 export const Home = ({navigation}: Props) => {
-  const today = format(new Date(), 'MMMM do, yyyy');
   const [value, setValue] = useState('100');
-  const {
-    setBaseCurrency,
-    baseCurrency,
-    quoteCurrency,
-    setQuoteCurrency,
-    swapCurrencies,
-    exchangeRate,
-  } = useContext(ConversionContext);
+  const {baseCurrency, quoteCurrency, swapCurrencies, exchangeRate, date} =
+    useContext(ConversionContext);
 
   const quoteCurrencyRate =
     quoteCurrency === baseCurrency ? 1 : exchangeRate.get(quoteCurrency);
 
   const conversionRate =
     quoteCurrencyRate === undefined ? 0 : quoteCurrencyRate;
+
+    console.log(`date value in the context is ${date}`)
+  const today = format(date, 'MMMM do, yyyy');
 
   return (
     <View style={styles.container}>

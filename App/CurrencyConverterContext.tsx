@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {api, ExchangeRates, ExchangeRateResponse} from './api';
 
 export type CurrencyUpdateAction = (currency: string) => void;
@@ -10,6 +10,7 @@ type CurrencyContextType = {
   setQuoteCurrency: CurrencyUpdateAction;
   exchangeRate: ExchangeRates;
   swapCurrencies: () => void;
+  date: Date;
 };
 
 export const ConversionContext = createContext<CurrencyContextType>({
@@ -19,28 +20,29 @@ export const ConversionContext = createContext<CurrencyContextType>({
   setBaseCurrency: () => {},
   setQuoteCurrency: () => {},
   swapCurrencies: () => {},
+  date: new Date(),
 });
 
 export const ConversionContextProvider: React.FC = ({children}) => {
-  const [baseCurrency, _setBaseCurrency] = useState('USD');
+  const [baseCurrency, setBaseCurrency] = useState('USD');
   const [quoteCurrency, setQuoteCurrency] = useState('GBP');
   const [exchangeRate, setExchangeRate] = useState(new Map<string, number>());
+  const [date, setDate] = useState(new Date());
 
-  updateExchangeRates(baseCurrency);
-
-  const setBaseCurrency = (currency: string) => {
-    _setBaseCurrency(currency);
-    updateExchangeRates(currency);
-  };
+  useEffect(() => {
+    updateExchangeRateInfo(baseCurrency);
+  }, [baseCurrency]);
 
   function swapCurrencies(): void {
     setQuoteCurrency(baseCurrency);
     setBaseCurrency(quoteCurrency);
   }
 
-  function updateExchangeRates(currency: string) {
+  function updateExchangeRateInfo(currency: string) {
     api(`/latest?base=${currency}`).then((result: ExchangeRateResponse) => {
+      console.log(result);
       setExchangeRate(result.rates);
+      setDate(new Date(result.date));
     });
   }
 
@@ -51,6 +53,7 @@ export const ConversionContextProvider: React.FC = ({children}) => {
     setBaseCurrency,
     setQuoteCurrency,
     swapCurrencies,
+    date,
   };
 
   return (
