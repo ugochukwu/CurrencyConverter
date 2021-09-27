@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
 });
 
 export const Home = ({navigation}: Props) => {
-  const conversionRate = 0.84325;
   const today = format(new Date(), 'MMMM do, yyyy');
   const [value, setValue] = useState('100');
   const {
@@ -85,7 +84,14 @@ export const Home = ({navigation}: Props) => {
     quoteCurrency,
     setQuoteCurrency,
     swapCurrencies,
+    exchangeRate,
   } = useContext(ConversionContext);
+
+  const quoteCurrencyRate =
+    quoteCurrency === baseCurrency ? 1 : exchangeRate.get(quoteCurrency);
+
+  const conversionRate =
+    quoteCurrencyRate === undefined ? 0 : quoteCurrencyRate;
 
   return (
     <View style={styles.container}>

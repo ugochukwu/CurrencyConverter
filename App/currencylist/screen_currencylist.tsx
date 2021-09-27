@@ -6,7 +6,7 @@ import colors from '../colors';
 import {RowItem, Separator} from '../components/row_item';
 import {CurrencyListProps} from '../Navigation';
 import currencies from './currencies.json';
-import {useActiveCurrencyContext} from './UseActiveCurrencyContext';
+import {useActiveCurrencyContext} from './useActiveCurrencyContext';
 
 export const CurrencyList: React.FC<CurrencyListProps> = ({
   navigation,
